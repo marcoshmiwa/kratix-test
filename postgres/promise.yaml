@@ -3,6 +3,6 @@ kind: Promise
 metadata:
   name: postgresql
 spec:
-  workflows:
+  workflow:
     ref:
       name: postgresql-workflow
