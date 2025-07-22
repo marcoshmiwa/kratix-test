@@ -1,0 +1,6 @@
+apiVersion: postgresql.platform.kratix.io/v1alpha1
+kind: PostgreSQL
+metadata:
+  name: orders-db
+spec:
+  storageGB: 100

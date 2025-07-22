@@ -1,0 +1,15 @@
+apiVersion: platform.kratix.io/v1alpha1
+kind: Workflow
+metadata:
+  name: postgresql-workflow
+spec:
+  containers:
+    - name: terraform
+      image: hashicorp/terraform:latest
+      command: ["terraform", "apply", "-auto-approve"]
+      volumeMounts:
+        - name: terraform-src
+          mountPath: /src
+    - name: helm
+      image: alpine/helm:latest
+      command: ["helm", "install", "postgresql", "bitnami/postgresql"]
