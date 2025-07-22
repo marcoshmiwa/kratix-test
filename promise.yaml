@@ -41,17 +41,6 @@ spec:
                   ready:
                     type: boolean
   workflows:
-    promise:
-      configure:
-      - apiVersion: platform.kratix.io/v1alpha1
-        kind: Pipeline
-        metadata:
-          name: mongodb-promise-configure
-          namespace: default
-        spec:
-          containers:
-          - image: ghcr.io/syntasso/kratix-marketplace/mongodb-configure:latest
-            name: mongodb-configure
     resource:
       configure:
       - apiVersion: platform.kratix.io/v1alpha1
