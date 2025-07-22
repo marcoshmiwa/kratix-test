@@ -41,7 +41,7 @@ data:
         spec:
           containers:
           - name: mongodb
-            image: 123456789012.dkr.ecr.us-east-1.amazonaws.com/mongodb:7.0
+            image: mongo:7.0
             ports:
             - containerPort: 27017
             env:
