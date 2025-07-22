@@ -2,7 +2,59 @@ apiVersion: platform.kratix.io/v1alpha1
 kind: Promise
 metadata:
   name: postgresql
+  namespace: default
 spec:
-  workflow:
-    ref:
-      name: postgresql-workflow
+  api:
+    apiVersion: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    metadata:
+      name: postgresqls.example.promise.syntasso.io
+    spec:
+      group: example.promise.syntasso.io
+      scope: Namespaced
+      names:
+        plural: postgresqls
+        singular: postgresql
+        kind: PostgreSQL
+      versions:
+      - name: v1alpha1
+        served: true
+        storage: true
+        schema:
+          openAPIV3Schema:
+            type: object
+            properties:
+              spec:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name for the PostgreSQL instance
+                    default: "postgresql"
+                  storageGB:
+                    type: integer
+                    description: Storage size in GB
+                    default: 10
+                required:
+                - name
+              status:
+                type: object
+                properties:
+                  connectionString:
+                    type: string
+                  ready:
+                    type: boolean
+  workflows:
+    resource:
+      configure:
+      - apiVersion: platform.kratix.io/v1alpha1
+        kind: Pipeline
+        metadata:
+          name: postgresql-resource-configure
+          namespace: default
+        spec:
+          containers:
+          - image: alpine:latest
+            name: postgresql-resource-configure
+            command: ["/bin/sh"]
+            args: ["-c", "echo 'PostgreSQL pipeline placeholder'"]
