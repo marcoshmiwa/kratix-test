@@ -1,0 +1,75 @@
+apiVersion: platform.kratix.io/v1alpha1
+kind: Promise
+metadata:
+  name: mongodb
+  namespace: default
+spec:
+  api:
+    apiVersion: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    metadata:
+      name: mongodbs.example.promise.syntasso.io
+    spec:
+      group: example.promise.syntasso.io
+      scope: Namespaced
+      names:
+        plural: mongodbs
+        singular: mongodb
+        kind: MongoDB
+      versions:
+      - name: v1alpha1
+        served: true
+        storage: true
+        schema:
+          openAPIV3Schema:
+            type: object
+            properties:
+              spec:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name for the MongoDB instance
+                    default: "mongodb"
+                required:
+                - name
+              status:
+                type: object
+                properties:
+                  connectionString:
+                    type: string
+                  ready:
+                    type: boolean
+  workflows:
+    promise:
+      configure:
+      - apiVersion: platform.kratix.io/v1alpha1
+        kind: Pipeline
+        metadata:
+          name: mongodb-promise-configure
+          namespace: default
+        spec:
+          containers:
+          - image: ghcr.io/syntasso/kratix-marketplace/mongodb-configure:latest
+            name: mongodb-configure
+    resource:
+      configure:
+      - apiVersion: platform.kratix.io/v1alpha1
+        kind: Pipeline
+        metadata:
+          name: mongodb-resource-configure
+          namespace: default
+        spec:
+          containers:
+          - image: alpine:latest
+            name: mongodb-resource-configure
+            command: ["/bin/sh"]
+            args: ["/scripts/pipeline.sh"]
+            volumeMounts:
+            - name: pipeline-scripts
+              mountPath: /scripts
+          volumes:
+          - name: pipeline-scripts
+            configMap:
+              name: mongodb-pipeline-scripts
+              defaultMode: 0755

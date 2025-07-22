@@ -1,0 +1,7 @@
+apiVersion: example.promise.syntasso.io/v1alpha1
+kind: MongoDB
+metadata:
+  name: basic-mongodb
+  namespace: default
+spec:
+  name: "basic-mongodb"
