@@ -1,6 +1,8 @@
-apiVersion: postgresql.platform.kratix.io/v1alpha1
+apiVersion: example.promise.syntasso.io/v1alpha1
 kind: PostgreSQL
 metadata:
   name: orders-db
+  namespace: default
 spec:
+  name: "orders-db"
   storageGB: 100
