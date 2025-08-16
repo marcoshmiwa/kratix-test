@@ -1,36 +1,10 @@
 apiVersion: platform.kratix.io/v1alpha1
 kind: Destination
 metadata:
-  name: platform-cluster
-  namespace: default
+  name: worker
+  labels:
+    environment: dev
 spec:
-  secretRef:
-    name: platform-cluster-credentials
-    namespace: kratix-platform-system
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: platform-cluster-credentials
-  namespace: kratix-platform-system
-type: Opaque
-stringData:
-  kubeconfig: |
-    apiVersion: v1
-    kind: Config
-    clusters:
-    - cluster:
-        server: https://kubernetes.default.svc
-        certificate-authority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      name: default
-    contexts:
-    - context:
-        cluster: default
-        namespace: default
-        user: default
-      name: default
-    current-context: default
-    users:
-    - name: default
-      user:
-        tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+  path: worker
+  stateStoreRef:
+    name: default
