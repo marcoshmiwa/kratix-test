@@ -8,3 +8,4 @@ spec:
   path: worker
   stateStoreRef:
     name: default
+    kind: BucketStateStore
