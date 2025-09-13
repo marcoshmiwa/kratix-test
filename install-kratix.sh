@@ -68,15 +68,6 @@ EOF
 install_promises() {
     echo "📋 Installing available Promises..."
 
-    if [ -f "mongdb/promise.yaml" ]; then
-        echo "Installing MongoDB Promise..."
-        kubectl apply -f mongdb/promise.yaml
-
-        if [ -f "mongdb/pipeline-configmap.yaml" ]; then
-            kubectl apply -f mongdb/pipeline-configmap.yaml
-        fi
-    fi
-
     if [ -f "postgres/promise.yaml" ]; then
         echo "Installing PostgreSQL Promise..."
         kubectl apply -f postgres/promise.yaml
