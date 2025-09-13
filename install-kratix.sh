@@ -54,13 +54,12 @@ create_worker_cluster() {
 
     cat <<EOF | kubectl apply -f -
 apiVersion: platform.kratix.io/v1alpha1
-kind: Cluster
+kind: Destination
 metadata:
   name: worker-1
   namespace: default
 spec:
-  id: worker-1
-  bucketPath: worker-1
+  strictMatchLabels: false
 EOF
 
     echo "✅ Worker cluster configured"
@@ -95,8 +94,8 @@ verify_installation() {
     echo -e "\nPromises:"
     kubectl get promises
 
-    echo -e "\nClusters:"
-    kubectl get clusters
+    echo -e "\nDestinations:"
+    kubectl get destinations
 
     echo "✅ Installation verification complete"
 }
